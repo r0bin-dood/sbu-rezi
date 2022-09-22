@@ -1,16 +1,9 @@
-"""
-Steps:
-1. Install paho-mqtt and twilio if not already installed
-    a. python3 -m pip install paho-mqtt
-    b. python3 -m pip install twilio
-2. If on VPN, disconnect
-2. PLEASE DO NOT SHARE *YOUR* TOKENS WITH ANYONE
-"""
+# PLEASE DO NOT SHARE *YOUR* TWILIO CREDS WITH ANYONE
+
 import os
 import argparse
 import paho.mqtt.client as mqtt
 from twilio.rest import Client 
-import json
 from datetime import datetime
 from threading import Thread
 import time

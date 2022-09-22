@@ -1,8 +1,4 @@
-# Install MQTT: python3 -m pip install paho-mqtt
-# Install playsound: python3 -m pip install playsound
-
 import argparse
-import threading
 import paho.mqtt.client as mqtt
 from pydub import AudioSegment
 from pydub.playback import play
