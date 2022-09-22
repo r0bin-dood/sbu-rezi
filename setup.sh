@@ -24,7 +24,6 @@ sudo apt-get install -y libav-tools libavcodec-extra ffmpeg
 echo "------------------------------"
 echo "Setting up virtual environment"
 echo "------------------------------"
-python3.7 -m pip install --upgrade pip
 python3.7 -m pip install virtualenv
 python3.7 -m venv ./sbu-rezi-env
 source sbu-rezi-env/bin/activate
@@ -32,6 +31,7 @@ source sbu-rezi-env/bin/activate
 echo "------------------"
 echo "Installing modules"
 echo "------------------"
+pip install --upgrade pip
 pip install -r requirements.txt
 pip install -r yolov5/requirements.txt
 

@@ -5,7 +5,7 @@ setup.sh installs the necessary libraries and utilities for this demo and YOLOv5
 It will create a virtual environment so:
 *** Remember to run "deactivate" when you're done in the virtual environment ***
 
-Usage:
+Start with:
 $ . setup.sh
 
 If you need to reset the project:
