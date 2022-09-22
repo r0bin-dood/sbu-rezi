@@ -38,7 +38,7 @@ def playSound():
     sound = AudioSegment.from_mp3(args.f)
     play(sound)
     print("Throttling for " + str(args.s) + " seconds")
-    time.sleep(args.s)
+    time.sleep(args.s - int(sound.duration_seconds))
     print("Ready to play...")
     soundThread = True
 

@@ -30,6 +30,7 @@ import os
 import platform
 import sys
 from pathlib import Path
+import paho.mqtt.client as mqtt
 
 import torch
 
@@ -76,6 +77,8 @@ def run(
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
         vid_stride=1,  # video frame-rate stride
+        ip="localhost",
+        port=1883,
 ):
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
@@ -84,6 +87,10 @@ def run(
     webcam = source.isnumeric() or source.endswith('.txt') or (is_url and not is_file)
     if is_url and is_file:
         source = check_file(source)  # download
+
+    mqttc = mqtt.Client()
+    mqttc.connect(ip, port, 60)
+    eventTopic = "@/detection"
 
     # Directories
     save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
@@ -198,6 +205,8 @@ def run(
                     vid_writer[i].write(im0)
 
         # Print time (inference-only)
+        if len(det):
+            mqttc.publish(eventTopic, f"{s}{dt[1].dt * 1E3:.1f}ms")
         LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms")
 
     # Print results
@@ -239,6 +248,8 @@ def parse_opt():
     parser.add_argument('--half', action='store_true', help='use FP16 half-precision inference')
     parser.add_argument('--dnn', action='store_true', help='use OpenCV DNN for ONNX inference')
     parser.add_argument('--vid-stride', type=int, default=1, help='video frame-rate stride')
+    parser.add_argument('--ip', type=str, default="localhost", help='IP address of server in the form 0.0.0.0, localhost if own computer')
+    parser.add_argument('--port', type=int, default=1883, help='MQTT port number (default 1883)')
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # expand
     print_args(vars(opt))

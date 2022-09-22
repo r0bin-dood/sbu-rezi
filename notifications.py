@@ -11,10 +11,9 @@ import argparse
 import paho.mqtt.client as mqtt
 from twilio.rest import Client 
 import json
-import subprocess
-import sys
 from datetime import datetime
-import requests
+from threading import Thread
+import time
 
 parser = argparse.ArgumentParser(description='Start Rezi SMS Notification Server')
 parser.add_argument('--i', type=str, default="localhost", help='IP address of server in the form 0.0.0.0, localhost if own computer')
@@ -26,28 +25,39 @@ parser.add_argument('--auth_token', type=str, default=os.environ.get('TWILIO_AUT
 parser.add_argument('--service_sid', type=str, default=os.environ.get('TWILIO_SERVICE_SID'), help='Please set environment variable TWILIO_SERVICE_SID')
 args = parser.parse_args()
 
-if not args.account_sid or not args.auth_token or not args.service_sid:
+if not args.account_sid or not args.auth_token or not args.service_sid or not args.n:
     exit(parser.print_help())
 
 client = Client(args.account_sid, args.auth_token) 
 
 eventTopic = "@/detection"
 
-bodyTemplate = '\
-\n{event} event from {devId} triggered a clip capture.\n\n\
-Clip: {clip}\
-'
-def on_message(mqttc, obj, msg):
-    message = str(msg.payload.decode("utf-8"))
-    parsedMessage = json.loads(message)
+global soundThread
+soundThread = True
 
-    print("{date} - Sending notification\n{message}\n\n".format(date=datetime.now(), message=parsedMessage))
+def on_message(mqttc, obj, msg):
+    global soundThread
+    if soundThread is True:
+        soundThread = False
+        thr = Thread(target=send_notificaiton, args=(msg,))
+        thr.start()
+
+    
+def send_notificaiton(msg):
+    global soundThread
+    message = str(msg.payload.decode("utf-8"))
+
+    print("{date} - Sending notification\n{message}\n".format(date=datetime.now(), message=message))
 
     message = client.messages.create(  
                       messaging_service_sid=args.service_sid, 
-                      body=parsedMessage,
+                      body=message,
                       to='+1' + args.n 
                   )
+    print("Throttling for " + str(args.s) + " seconds")
+    time.sleep(args.s)
+    print("Ready...")
+    soundThread = True
 
 mqttc = mqtt.Client()
 mqttc.on_message = on_message
