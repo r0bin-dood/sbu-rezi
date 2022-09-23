@@ -6,7 +6,8 @@ document carefully, as it's going to help you understand how to leverage the
 tools and resources being provided.
 
 
-# for OD and ML related steps go to "README_OD.md"
+# for training your own dataset steps go to "README_OD.md"
+
 
 # goals
 
