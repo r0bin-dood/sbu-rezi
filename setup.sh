@@ -32,8 +32,8 @@ echo "------------------"
 echo "Installing modules"
 echo "------------------"
 pip install --upgrade pip
-pip install -r requirements.txt
-pip install -r yolov5/requirements.txt
+pip install -r requirements.txt --no-cache-dir
+pip install -r yolov5/requirements.txt --no-cache-dir
 
 echo "--------------------"
 echo "Done! HAPPY HACKING!"
