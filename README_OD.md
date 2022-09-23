@@ -3,7 +3,7 @@
 Note: The following example commands assume you are in the yolov5 directory within this project.
 
 Note 2: There is a sample Google Colab network that is setup for working through training a custom ML model. You can make a copy of it and use it
-instead of an IDE or terminal. Take a look here: 
+instead of an IDE or terminal. Take a look here: https://colab.research.google.com/drive/1yJlHYE2u-Qls6sE554fdJt_W6YeWq7ax?usp=sharing
 
 1. Acquire dataset
 
