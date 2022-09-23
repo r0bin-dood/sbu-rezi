@@ -1,0 +1,17 @@
+names:
+- bishop
+- black-bishop
+- black-king
+- black-knight
+- black-pawn
+- black-queen
+- black-rook
+- white-bishop
+- white-king
+- white-knight
+- white-pawn
+- white-queen
+- white-rook
+nc: 13
+train: ../SBU-Hacks-Chess-Pieces-Detection-Demo-1/train/images
+val: ../SBU-Hacks-Chess-Pieces-Detection-Demo-1/valid/images
