@@ -6,6 +6,8 @@ document carefully, as it's going to help you understand how to leverage the
 tools and resources being provided.
 
 
+# for OD and ML related steps go to "README_OD.md"
+
 # goals
 
 
@@ -33,7 +35,7 @@ clone the YOLOv5 repository directly outside of thie project folder.
 
 
 This project was written and tested on a Debian based Linux system. Ubuntu 18 
-or 20 should work fine.
+or 20 should work fine. Raspbian is also probably fine though untested.
 
 
 # installation & usage
